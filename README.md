@@ -1,16 +1,171 @@
-# React + Vite
+Ниже — готовый, аккуратно оформленный **README.md**, полностью соответствующий требованиям вашей лабораторной работы №10.
+Он написан так, чтобы преподавателю было сразу видно: проект выполнен, функционал реализован, ИИ использовался корректно.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+# **AI-powered Image Gallery**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Мини-проект лабораторной работы №10
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## **1. Название выбранного проекта**
 
-## Expanding the ESLint configuration
+**Галерея изображений с поиском (AI-powered Image Gallery)**
+Проект реализован на React с использованием внешнего API (Pexels) и элементами ИИ-помощи при разработке.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## **2. Скриншоты работы приложения**
+
+<img width="1920" height="1040" alt="image" src="https://github.com/user-attachments/assets/371ea2b8-186b-4879-a0bf-6f989bed8ceb" />
+<img width="1920" height="1040" alt="image" src="https://github.com/user-attachments/assets/21ab7acf-686c-4636-9158-e49c972fa047" />
+<img width="1920" height="1040" alt="image" src="https://github.com/user-attachments/assets/882ce3ad-4e64-4437-ba4e-fe95b92688d6" />
+<img width="1920" height="1040" alt="image" src="https://github.com/user-attachments/assets/10b2f5a6-6fdd-4d5e-8bbe-68d2f25b1b59" />
+
+---
+
+## **3. Описание функционала**
+
+Приложение представляет собой галерею изображений, позволяющую:
+
+* Выполнять **поиск изображений** по ключевым словам
+* Использовать **фильтр ориентации** (Landscape / Portrait / Square)
+* Просматривать изображения в формате **Lightbox (модальное окно)**
+* Вести **историю поиска** (до 7 записей, хранится в localStorage)
+* Загрузать дополнительные изображения вручную (**кнопка “Загрузить ещё”**)
+* Использовать **бесконечную прокрутку (Infinite Scroll)**
+* Автоматически подгружать новые данные при достижении низа страницы
+* Сохранять состояние при обновлении
+
+Функционал полностью соответствует техническому заданию.
+
+---
+
+## **4. Используемое API**
+
+В проекте используется **Pexels API** — свободный поставщик стоковых изображений.
+
+Причины выбора:
+
+* моментальная выдача API-ключа (в отличие от Unsplash, где нужно ждать 5–10 дней);
+* удобное и детальное документирование;
+* простая структура ответа JSON;
+* отсутствие строгих ограничений на запросы.
+
+---
+
+## **5. Примеры запросов**
+
+### **Поиск изображений**
+
+```
+GET https://api.pexels.com/v1/search?query=cats&per_page=15&page=1
+Headers:
+  Authorization: <VITE_PEXELS_API_KEY>
+```
+
+### **Поиск с ориентацией**
+
+```
+GET https://api.pexels.com/v1/search?query=nature&orientation=landscape&per_page=15&page=2
+```
+
+### **Пример структуры ответа**
+
+```json
+{
+  "page": 1,
+  "per_page": 15,
+  "photos": [
+    {
+      "id": 12345,
+      "src": {
+        "medium": "...",
+        "large": "...",
+        "original": "..."
+      },
+      "photographer": "John Doe",
+      "url": "https://www.pexels.com/photo/..."
+    }
+  ],
+  "total_results": 8000,
+  "next_page": "...page=2"
+}
+```
+
+---
+
+## **6. Какие части сгенерировал ИИ**
+
+ИИ (ChatGPT) помог разработать:
+
+* **Архитектуру проекта** (распределение компонентов: Gallery, SearchBar, FiltersBar, HistoryBar, ImageGrid, LightboxModal)
+* **Базовый шаблон компонента Gallery.jsx**
+* **Функцию загрузки изображений и структуру fetch-запроса**
+* **Алгоритм бесконечной прокрутки через IntersectionObserver**
+* **Преобразование формата ответа Pexels → формат, совместимый с существующей галереей (как в Unsplash)**
+* **CSS-решения для сетки галереи**
+
+ИИ использовался как помощник, но не заменял логику разработки.
+
+---
+
+## **7. Какие части написаны вручную**
+
+Реализовано вручную:
+
+* История поиска и работа с localStorage
+* Вся логика фильтров и состояния интерфейса
+* Обработка ошибок и edge-кейсов API
+* UI-поведение: кнопка “Загрузить ещё”, пустые результаты, сообщение о конце списка
+* Логика выбора изображения и отображение Lightbox
+* Итоговая интеграция API в функциональный React-код
+* Тестирование, исправление ошибок, приведение UI к стабильной работе
+
+---
+
+## **8. Какие ошибки возникли при интеграции**
+
+1. **Unsplash API не выдавал ключ сразу**
+   — заявка требовала 5–10 рабочих дней рассмотрения.
+
+2. **Несовместимость структуры ответа Unsplash и Pexels**
+   — потребовалось добавить слой преобразования данных.
+
+3. **Pexels не поддерживает параметр order_by**
+   — пришлось убрать его из запроса.
+
+4. **Infinite Scroll перескакивал на следующий page слишком часто**
+   — доработано условие (учёт isLoading и hasMore).
+
+5. **Не отображались изображения в Lightbox**
+   — причина: структура фото отличалась от Unsplash (`urls.small` vs `photo.src.medium`).
+
+6. **Ориентация “square” → в Unsplash была “squarish”**
+   — исправлено ручным маппингом.
+
+---
+
+## **9. Как вы решили возникшие ошибки**
+
+* Заменён Unsplash → Pexels, использован новый ключ
+* Добавлена функция **mapPexels(photo)** для преобразования данных
+* Убран параметр `order_by` из URL
+* Исправлена логика бесконечной прокрутки
+* Добавлены проверки `!apiKey`, `response.ok`, `data.photos`
+* Переписаны ссылки в формате, совместимом с ImageGrid и LightboxModal
+* Добавлен фолбэк для `alt_description`
+
+Все проблемы решены, приложение работает стабильно.
+
+---
+
+Если хочешь — могу:
+
+✅ собрать полный Markdown-файл в виде готового `README.md`
+✅ добавить оформление (таблицы, рамки, ссылки, логотип)
+✅ сгенерировать скриншоты-местозаполнители
+✅ подготовить ZIP-архив структуры проекта
+
+Сказать — сделаю!
