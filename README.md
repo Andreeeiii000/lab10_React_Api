@@ -1,5 +1,3 @@
----
-
 # **AI-powered Image Gallery**
 
 Мини-проект лабораторной работы №10
@@ -155,5 +153,3 @@ GET https://api.pexels.com/v1/search?query=nature&orientation=landscape&per_page
 * Добавлен фолбэк для `alt_description`
 
 Все проблемы решены, приложение работает стабильно.
-
----
